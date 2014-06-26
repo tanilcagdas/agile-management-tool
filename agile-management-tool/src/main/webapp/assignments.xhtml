@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="/mainView.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<h:head>
+		<title>AGILE</title>
+</h:head>
+	<ui:define name="title">
+		<p:panel id="AssignmentPanel" styleClass="titlepanel"
+			header="Assignments" />
+	</ui:define>
+
+	<ui:define name="content">
+		<h:body>
+			<f:view>
+
+				<h:form>
+					<p:tabView>
+						<p:tab title="Iteration">
+
+							<p:dataTable
+								value="#{iterationController.getAssignedIterations(userController.selectedUser)}"
+								var="iteration">
+								<p:column headerText="Iterations">
+									<h:outputText value="#{iteration.name}"></h:outputText>
+								</p:column>
+							</p:dataTable>
+						</p:tab>
+						<p:tab title="User Story">
+							<p:dataTable
+								value="#{userStoryController.getAssignedUserStories(userController.selectedUser)}"
+								var="userStory">
+								<p:column headerText="User Story">
+									<h:outputText value="#{userStory.name}"></h:outputText>
+								</p:column>
+
+								<p:column headerText="Iterations">
+									<h:outputText value="#{userStory.iteration.name}"></h:outputText>
+								</p:column>
+							</p:dataTable>
+						</p:tab>
+
+						<p:tab title="Task">
+							<p:dataTable value="#{taskController.assignedTasks}" var="task"
+								editable="true" editMode="cell">
+
+								<p:column headerText="Task">
+									<h:outputText value="#{task.name}"></h:outputText>
+								</p:column>
+								<p:column headerText="User Story">
+									<h:outputText value="#{task.userStory.name}"></h:outputText>
+								</p:column>
+								<p:column headerText="Iteration">
+									<h:outputText value="#{task.userStory.iteration.name}"></h:outputText>
+								</p:column>
+								<p:column headerText="Estimate">
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{task.estimate}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:inputText id="taskEstimateInput" value="#{task.estimate}"
+												style="width:96%" />
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
+								<p:column headerText="To do">
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{task.todo}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:inputText id="taskActualInput" value="#{task.todo}"
+												style="width:96%" />
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
+								<p:column headerText="Finished">
+									<p:selectBooleanCheckbox value="#{task.finished}"></p:selectBooleanCheckbox>
+								</p:column>
+
+								<f:facet name="footer">
+									<p:commandButton id="savetask" value="Save" icon="ui-icon-disk" 
+										action="#{taskController.saveAssignments}" update="@form" />
+								</f:facet>
+							</p:dataTable>
+						</p:tab>
+					</p:tabView>
+
+				</h:form>
+			</f:view>
+
+
+		</h:body>
+	</ui:define>
+</ui:composition>

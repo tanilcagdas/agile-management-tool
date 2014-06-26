@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:head>
+	<title>Agile Project Management Login Page</title>
+<h:outputStylesheet id="loginStyleSheet" name="../css/login.css" />
+</h:head>
+
+<h:body>
+	<center>
+		<p:panel id="loginPanel" header="Agile Project Management Tool">
+			<h:form id="loginForm" prependId="false">
+				<p:growl id="growlMessage" showDetail="false" autoUpdate="true"
+					sticky="true" globalOnly="true" display="text" />
+				<p:focus id="usernameFocus" for="username" />
+
+				<p:panelGrid id="credentialsPanelGrid">
+					<p:row>
+						<p:column>
+							<h:outputLabel id="usernameLabel" for="username"
+								value="Username:" />
+						</p:column>
+						<p:column>
+							<p:inputText id="username" name="username" label="Username"
+								required="true" maxlength="16" size="10" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column styleClass="">
+							<h:outputLabel id="passwordLabel" for="password"
+								value="Password:" />
+						</p:column>
+						<p:column>
+							<p:password id='password' name='password' label="Password"
+								required="true" maxlength="16" size="10" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:commandButton id="logitnBUtton" type="submit"
+					style="padding-bottm: 5px;" action="#{loginController.doLogin}"
+					value="Login" ajax="false" update="growlMessage" > 
+					
+						<f:setPropertyActionListener target="#{userController.userName}" value="#{username}"></f:setPropertyActionListener>
+					</p:commandButton>
+			</h:form>
+		</p:panel>
+	</center>
+</h:body>
+
+</html>
+

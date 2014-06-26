@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="/mainView.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<ui:define name="title">
+		<p:panel id="TaskPanel" styleClass="titlepanel" header="Task" />
+	</ui:define>
+
+	<ui:define name="content">
+		<h:body>
+			<f:view>
+				<h:form id="taskForm">
+
+
+					<p:dataTable id="taskDataTable" value="#{taskController.taskList}"
+						var="task" editable="true" editMode="cell" rowIndexVar="index">
+
+						<p:column headerText="Task" style="width:25%">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{task.name}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText id="taskNameInput" value="#{task.name}"
+										style="width:96%" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column headerText="User Story" style="width:25%">
+
+							<p:selectOneMenu value="#{task.userStory.name}" style="width:70%">
+								<f:selectItems value="#{userStoryController.userStoryNameList}"></f:selectItems>
+								<p:ajax event="change"
+									listener="#{taskController.handleUserStorySelect(index)}" />
+							</p:selectOneMenu>
+						</p:column>
+
+						<p:column headerText="Detail" style="width:25%">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{task.detail}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText id="taskDetailInput" value="#{task.detail}"
+										style="width:96%" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column headerText="Estimate">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{task.estimate}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText id="taskEstimateInput" value="#{task.estimate}"
+										style="width:96%" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column headerText="To Do">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{task.todo}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText id="taskActualInput" value="#{task.todo}"
+										style="width:96%" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column headerText="Finished">
+							<p:selectBooleanCheckbox id="taskFinishedInput"
+								value="#{task.finished}" />
+						</p:column>
+
+						<p:column headerText="Owner" style="width:25%">
+							<p:selectOneMenu value="#{task.owner.username}" style="width:70%">
+								<f:selectItems value="#{userController.userArray}"></f:selectItems>
+								<p:ajax event="change"
+									listener="#{taskController.handleUserSelect(index)}" />
+							</p:selectOneMenu>
+						</p:column>
+
+						<p:column headerText="Delete">
+							<p:commandButton value="Delete" icon="ui-icon-trash"
+								action="#{taskController.delete(index)}" immediate="true"
+								update="@form">
+							</p:commandButton>
+						</p:column>
+
+						<f:facet name="footer">
+							<p:commandButton id="addTaskButton" value="Add"
+								icon="ui-icon-plus" immediate="true"
+								action="#{taskController.add}" update="@form" />
+						</f:facet>
+
+					</p:dataTable>
+					<p:commandButton value="save" action="#{taskController.save}"
+						ajax="true" update="@form" process="@form"></p:commandButton>
+				</h:form>
+			</f:view>
+
+		</h:body>
+	</ui:define>
+</ui:composition>

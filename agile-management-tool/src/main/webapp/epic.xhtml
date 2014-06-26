@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="/mainView.xhtml"  xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	#{epicController.findAll()}
+</h:head>
+<ui:define name="title">
+		<p:panel id="TaskPanel" styleClass="titlepanel"
+			header="Task" />
+	</ui:define>
+
+	<ui:define name="content">
+<h:body>
+	<f:view>
+		<h:form>
+			<p:dataTable value="#{epicController.epicList}" var="epic"
+				editable="true" editMode="cell" rowIndexVar="index">
+
+				<p:column headerText="Epic" style="width:25%">
+					<p:cellEditor>
+						<f:facet name="input">
+							<p:inputText value="#{epic.name}" style="width:96%" />
+						</f:facet>
+						<f:facet name="output">
+							<h:outputText value="#{epic.name}" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+
+				<p:column headerText="Detail" style="width:25%">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{epic.detail}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText id="epicDetailInput" value="#{epic.detail}"
+								style="width:96%" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Owner" style="width:25%">
+					<p:selectOneMenu value="#{epic.owner.username}" style="width:80%">
+						<f:selectItems value="#{userController.userArray}"></f:selectItems>
+					</p:selectOneMenu>
+				</p:column>
+
+				<p:column headerText="Delete">
+					<p:commandButton value="Delete" icon="ui-icon-trash"
+						action="#{epicController.delete(index)}" immediate="true"
+						update="@form">
+					</p:commandButton>
+				</p:column>
+
+				<f:facet name="footer">
+					<p:commandButton id="addTaskButton" value="Add" icon="ui-icon-plus"
+						immediate="true" action="#{epicController.add}" update="@form" />
+				</f:facet>
+
+			</p:dataTable>
+			<p:commandButton value="save" action="#{epicController.save}"
+				update="@form" process="@form"></p:commandButton>
+		</h:form>
+	</f:view>
+
+
+</h:body>
+</ui:define>
+</ui:composition>

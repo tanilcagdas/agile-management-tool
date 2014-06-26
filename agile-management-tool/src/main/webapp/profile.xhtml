@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="/mainView.xhtml"  
+    xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>AGILE</title>
+	#{userController.getLoggedinUser()}
+</h:head>
+<ui:define name="title">
+		<p:panel id="ProfilePanel" styleClass="titlepanel"
+			header="Profile" />
+	</ui:define>
+
+	<ui:define name="content">
+<h:body>
+	<f:view>
+
+		<h:form>
+
+
+			<p:panelGrid id="profilePanelGrid" style="width:100%">
+
+				<p:row>
+				
+				<p:column >
+				<p:outputLabel value="User Name" for="username" ></p:outputLabel>
+				</p:column>
+					<p:column style="width:25% ; height:1.5em">
+						<h:outputText id="username" value="#{userController.selectedUser.username}" />
+					</p:column>
+					<p:column>
+					</p:column>
+				</p:row>
+
+				<p:row>
+					<p:column style="width:25% ; height:1.5em">
+						<p:outputLabel value="Password " for="userPasswordInput"></p:outputLabel>
+					</p:column>
+
+					<p:column style="width:25% ; height:1.5em">
+						<p:password id="userPasswordInput"
+							value="#{userController.password}"
+							redisplay="false" style="width:96%"
+							match="userPasswordConfirmInput" />
+					</p:column>
+					<p:column style="width:50% ; height:1.5em">
+						<p:message for="userPasswordInput"></p:message>
+					</p:column>
+
+				</p:row>
+				<p:row>
+
+					<p:column style="width:25% ; height:1.5em">
+						<p:outputLabel value="Confirm Password "
+							for="userPasswordConfirmInput"></p:outputLabel>
+					</p:column>
+
+					<p:column style="width:25% ; height:1.5em">
+						<p:password id="userPasswordConfirmInput" label="Confirm Password"
+							value="#{userController.password}"
+							redisplay="false" style="width:96%" />
+					</p:column>
+					<p:column></p:column>
+
+
+				</p:row>
+
+				<p:row>
+				<p:column >
+				<p:outputLabel value="Authority" for="authority" ></p:outputLabel>
+				</p:column>
+					<p:column id="authority" headerText="Authority" style="width:25%">
+						<h:outputText
+							value="#{userController.selectedUser.authority.name}" />
+					</p:column>
+					<p:column></p:column>
+				</p:row>
+			</p:panelGrid>
+
+			<p:commandButton value="Change Password"
+				action="#{userController.changePassword}" ajax="true" update="@form"
+				process="@form"></p:commandButton>
+		</h:form>
+	</f:view>
+
+
+</h:body>
+</ui:define>
+</ui:composition>

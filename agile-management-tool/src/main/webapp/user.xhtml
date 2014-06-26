@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="/mainView.xhtml" 
+xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>User</title>
+</h:head>
+<ui:define name="title">
+		<p:panel id="UserPanel" styleClass="titlepanel"
+			header="User" />
+	</ui:define>
+
+	<ui:define name="content">
+<h:body>
+	<f:view>
+
+		<h:form>
+			<p:dataTable value="#{userController.userList}" var="user"
+				editable="true" editMode="cell" rowIndexVar="index">
+
+
+				<p:column headerText="Name" style="width:25% ; height:1.5em">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{user.username}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText id="userNameInput" value="#{user.username}"
+								style="width:96%" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Reset Password" style="width:25% ; height:1.5em">
+					<p:commandLink value="Reset Password"
+						action="#{userController.resetPassword(index)}"></p:commandLink>
+				</p:column>
+
+				<p:column headerText="Role" style="width:25%">
+					<p:selectOneMenu value="#{user.authority.name}" style="width:70%">
+						<f:selectItems value="#{userController.userAuthorityArray}"></f:selectItems>
+					</p:selectOneMenu>
+				</p:column>
+				
+				<p:column headerText="Type" style="width:25%">
+					<p:selectOneMenu value="#{userController.userType}" style="width:70%"  rendered="#{index ge userController.count}">
+						<f:selectItems value="#{userController.userTypeList}"></f:selectItems>
+						<p:ajax event="change"  listener="#{userController.handleUserTypeSelect(index)}" />
+					</p:selectOneMenu>
+				</p:column>
+
+				<p:column headerText="Delete">
+					<p:commandButton value="Delete" icon="ui-icon-trash"
+						action="#{userController.delete(index)}" immediate="true"
+						update="@form">
+					</p:commandButton>
+				</p:column>
+
+				<f:facet name="footer">
+					<p:commandButton id="addTaskButton" value="Add" icon="ui-icon-plus"
+						immediate="true" action="#{userController.add}" update="@form" />
+				</f:facet>
+
+
+			</p:dataTable>
+			<p:commandButton value="save" action="#{userController.save}"
+				ajax="true" update="@form" process="@form"></p:commandButton>
+		</h:form>
+	</f:view>
+
+
+</h:body>
+</ui:define>
+</ui:composition>

@@ -1,0 +1,30 @@
+@CHARSET "ISO-8859-1";
+body {
+	position: relative;
+	width: 300px;
+	height: 180px;
+	vertical-align: middle;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.ui-state-highlight,.ui-widget-content .ui-state-highlight,.ui-widget-header .ui-state-highlight
+	{
+	background: linear-gradient(center top, rgba(0, 0, 0, 0.25), transparent)
+		repeat scroll 0 0 #AAAAAA;
+	border: 1px solid #666666;
+	color: #FFFFFF;
+	text-shadow: 1px 1px 1px #333333;
+}
+
+.ui-shadow {
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+}
+
+tbody tr {
+	border-style: none !important;
+}
+
+tbody td {
+	border-style: none !important;
+}

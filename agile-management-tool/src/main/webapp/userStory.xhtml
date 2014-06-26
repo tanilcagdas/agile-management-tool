@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="/mainView.xhtml" 
+ xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:define name="title">
+		<p:panel id="userStoryPanel" styleClass="titlepanel"
+			header="User Stroy" />
+	</ui:define>
+
+	<ui:define name="content">
+<h:body>
+	<f:view>
+		<h:form>
+
+			<p:dataTable value="#{userStoryController.userStoryList}"
+				var="userStory" editable="true" editMode="cell" rowIndexVar="index">
+
+				<p:column headerText="User Story" style="width:20%">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{userStory.name}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText id="userStoryNameInput" value="#{userStory.name}"
+								style="width:96%" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Detail" style="width:20%">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{userStory.detail}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText id="userStoryDetailInput" value="#{userStory.detail}"
+								style="width:96%" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+
+				<p:column headerText="Iteration" style="width:20%">
+					<p:selectOneMenu value="#{userStory.iteration.name}" 
+						style="width:80%">
+						<f:selectItems value="#{iterationController.iterationArray}"></f:selectItems>
+						<p:ajax event="change"  listener="#{userStoryController.handleIterationSelect(index)}" />
+					</p:selectOneMenu>
+				</p:column>
+
+
+
+				<p:column headerText="Owner" style="width:20%">
+
+
+					<p:selectOneMenu value="#{userStory.owner.username}"
+						style="width:80%">
+						<f:selectItems value="#{userController.userArray}"></f:selectItems>
+						<p:ajax event="change"  listener="#{userStoryController.handleUserSelect(index)}" />
+					</p:selectOneMenu>
+				</p:column>
+
+				<p:column headerText="Delete">
+					<p:commandButton value="Delete" icon="ui-icon-trash"
+						action="#{userStoryController.delete(index)}" immediate="true"
+						update="@form">
+					</p:commandButton>
+				</p:column>
+
+				<f:facet name="footer">
+					<p:commandButton id="addTaskButton" value="Add" icon="ui-icon-plus"
+						immediate="true" action="#{userStoryController.add}"
+						update="@form" />
+				</f:facet>
+
+			</p:dataTable>
+			<p:commandButton value="save" action="#{userStoryController.save}"
+				update="@form" process="@form"></p:commandButton>
+		</h:form>
+	</f:view>
+
+
+</h:body>
+</ui:define>
+</ui:composition>

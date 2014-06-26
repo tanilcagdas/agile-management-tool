@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="/mainView.xhtml"  
+    xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	#{iterationController.findAll()}
+</h:head>
+<ui:define name="title">
+		<p:panel id="TaskPanel" styleClass="titlepanel"
+			header="Task" />
+	</ui:define>
+
+	<ui:define name="content">
+<h:body>
+	<f:view>
+		<h:form>
+			<p:dataTable id="iterationTable" value="#{iterationController.iterationList}"
+				var="iteration" editable="true" editMode="cell" rowIndexVar="index">
+
+				<p:column headerText="Iteration" style="width:17%">
+					<p:cellEditor>
+						<f:facet name="input">
+							<p:inputText value="#{iteration.name}" style="width:96%" />
+						</f:facet>
+						<f:facet name="output">
+							<h:outputText value="#{iteration.name}" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+
+				<p:column headerText="Detail" style="width:17%">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{iteration.detail}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText id="iterationDetailInput"
+								value="#{iteration.detail}" style="width:96%" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Owner" style="width:17%">
+					<p:selectOneMenu value="#{iteration.owner.username}" style="width:96%">
+						<f:selectItems value="#{userController.userArray}"></f:selectItems>
+						<p:ajax event="change"  listener="#{iterationController.handleUserSelect(index)}" update="@form"/>
+					</p:selectOneMenu>
+				</p:column>
+
+				<p:column headerText="Start Time" style="width:17%">
+					<p:calendar value="#{iteration.startDate}" style="width:30%" size="15">
+					<p:ajax event="dateSelect"  listener="#{iterationController.handleTimeChange(index)}" update="@form"/>
+					</p:calendar>
+				</p:column>
+
+				<p:column headerText="End Time" style="width:17%">
+					<p:calendar value="#{iteration.endDate}" style="width:30%" size="15">
+					<p:ajax event="dateSelect"  listener="#{iterationController.handleTimeChange(index)}" update="@form"/>
+					</p:calendar>
+				</p:column>
+
+				<p:column headerText="Period" style="width:17%">
+				<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{iteration.days}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText id="iterationDayssInput"
+								value="#{iteration.days}" style="width:80%" >
+								<p:ajax event="change"  listener="#{iterationController.handlePeriodChange(index)}" update="@form"/>
+								</p:inputText>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				
+				<p:column headerText="Delete">
+					<p:commandButton value="Delete" icon="ui-icon-trash"
+						action="#{iterationController.delete(index)}" immediate="true"
+						update="@form">
+					</p:commandButton>
+				</p:column>
+
+				<f:facet name="footer">
+					<p:commandButton id="addIterationButton" value="Add"
+						icon="ui-icon-plus" immediate="true"
+						action="#{iterationController.add}" update="@form" />
+				</f:facet>
+
+			</p:dataTable>
+			<p:commandButton value="save" action="#{iterationController.save}"
+				update="@form" process="@form"></p:commandButton>
+		</h:form>
+	</f:view>
+
+
+</h:body>
+</ui:define>
+</ui:composition>

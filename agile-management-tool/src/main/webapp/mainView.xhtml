@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>AGILE</title>
+</h:head>
+<h:body>
+	<h:outputStylesheet id="agileOutputStyleSheet" name="../css/agile.css" />
+	<f:view>
+		<p:messages id="messages" showDetail="true" autoUpdate="true" showSummary="false"
+			closable="true"></p:messages>
+		<ui:remove>
+			<h:form id="LoginLabelForm" style="height:50px">
+				<h:outputText id="templateNameLabel"
+					value="#{loginController.getUser()} " styleClass="loginLabel"
+					style="font-size : 8pt; font-style: italic;" />
+				<p:commandButton id="logoutbutton"
+					action="#{loginController.doLogout}" value="Logout"
+					immediate="true" ajax="false" styleClass="logoutbutton" />
+			</h:form>
+		</ui:remove>
+
+		<ui:include src="menu.xhtml"></ui:include>
+		<p:spacer height="50px"></p:spacer>
+
+		<ui:insert name="title" >Default title</ui:insert>
+		<ui:insert name="content">Default Page</ui:insert>
+
+	</f:view>
+</h:body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:form>
+
+	<p:menubar>
+
+		<p:menuitem id="iterationMenuItem" value="Iteration"
+			action="/iteration.xhtml?faces-redirect=true" immediate="true">
+		</p:menuitem>
+
+		<p:menuitem id="userStoryMenuItem" value="User Story"
+			action="/userStory.xhtml?faces-redirect=true" immediate="true">
+		</p:menuitem>
+		<p:menuitem id="taskMenuItem" value="Task"
+			action="/task.xhtml?faces-redirect=true" immediate="true">
+		</p:menuitem>
+		<p:menuitem id="profileMenuItem" value="Profile"
+			action="/profile.xhtml?faces-redirect=true" immediate="true">
+		</p:menuitem>
+		
+		<p:submenu id="ScrumTeamSubMenu" label="ScrumTeam">
+		<p:menuitem id="scrumTeamMenuItem" value="Scrum Team Managers"
+			action="/scrumTeam.xhtml?faces-redirect=true" immediate="true">
+		</p:menuitem>
+		<p:menuitem id="scrumTeamDevelopersMenuItem" value="Scrum Team Developers"
+			action="/scrumTeamDevelopers.xhtml?faces-redirect=true" immediate="true">
+		</p:menuitem>
+		</p:submenu>
+
+		<p:menuitem id="chartsMenuItem" value="Charts"
+			action="/charts.xhtml?faces-redirect=true" immediate="true">
+		</p:menuitem>
+
+		<p:menuitem id="assignmentsMenuItem" value="Assignments"
+			action="/assignments.xhtml?faces-redirect=true" immediate="true">
+		</p:menuitem>
+
+		<p:menuitem id="userMenuItem" value="User" rendered="#{loginController.getAuthority() eq 'ROLE_ADMIN'}"
+			action="/user.xhtml?faces-redirect=true" immediate="true">
+		</p:menuitem>
+
+		<f:facet name="options">
+			<h:outputText value="#{loginController.getUser()}" style="font-size : 8pt; font-style: italic;"/>
+			<p:commandButton value="Logout" icon="ui-icon-extlink" 
+			action="#{loginController.doLogout}"  immediate="true" ajax="false"/>
+		</f:facet>
+
+	</p:menubar>
+
+</h:form>
+</html>
+

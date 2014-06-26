@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="/mainView.xhtml"  
+    xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:define name="title">
+		<p:panel id="ScrumTeamPanel" styleClass="titlepanel"
+			header="ScrumTeam" />
+	</ui:define>
+
+	<ui:define name="content">
+<h:body>
+	<f:view>
+		<h:form>
+			<p:dataTable value="#{scrumTeamController.scrumTeamList}"
+				var="scrumTeam" editable="true" editMode="cell" rowIndexVar="index">
+
+				<p:column headerText="scrumTeam" style="width:17%">
+					<p:cellEditor>
+						<f:facet name="input">
+							<p:inputText value="#{scrumTeam.name}" style="width:96%" />
+						</f:facet>
+						<f:facet name="output">
+							<h:outputText value="#{scrumTeam.name}" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				
+				<p:column headerText="Scrum Master" style="width:17%">
+					<p:selectOneMenu value="#{scrumTeam.scrumMaster.username}" style="width:96%">
+						<f:selectItems value="#{userController.userArray}"></f:selectItems>
+						<p:ajax event="change"  listener="#{scrumTeamController.handleScrumMasterUserSelect(index)}" />
+					</p:selectOneMenu>
+				</p:column>
+				
+				<p:column headerText="Product Owner" style="width:17%">
+					<p:selectOneMenu value="#{scrumTeam.productOwner.username}" style="width:96%">
+						<f:selectItems value="#{userController.userArray}"></f:selectItems>
+						<p:ajax event="change"  listener="#{scrumTeamController.handleProductOwnerUserSelect(index)}" />
+					</p:selectOneMenu>
+				</p:column>
+
+
+
+				<p:column headerText="Delete">
+					<p:commandButton value="Delete" icon="ui-icon-trash"
+						action="#{scrumTeamController.delete(index)}" immediate="true"
+						update="@form">
+					</p:commandButton>
+				</p:column>
+
+				<f:facet name="footer">
+					<p:commandButton id="addScrumTeamButton" value="Add"
+						icon="ui-icon-plus" immediate="true"
+						action="#{scrumTeamController.add}" update="@form" />
+				</f:facet>
+
+			</p:dataTable>
+			<p:commandButton value="save" action="#{scrumTeamController.save}"
+				update="@form" process="@form"></p:commandButton>
+		</h:form>
+	</f:view>
+
+
+</h:body>
+</ui:define>
+</ui:composition>

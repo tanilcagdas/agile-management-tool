@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="/mainView.xhtml"  xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:define name="title">
+		<p:panel id="ChartsPanel" styleClass="titlepanel"
+			header="Charts" />
+	</ui:define>
+
+	<ui:define name="content">
+<h:body>
+<h:form id="chartForm">
+<p:selectOneMenu value="#{chartsController.selectedIterationName}" 
+						style="width:80%">
+						<f:selectItems value="#{iterationController.iterationArray}"></f:selectItems>
+						<p:ajax event="change"  listener="#{chartsController.handleIterationSelect}" update="#{p:component('linear')}" />
+					</p:selectOneMenu>
+
+<p:lineChart id="linear" value="#{chartsController.linearModel}" legendPosition="e"  
+     title="Linear Chart" minY="#{chartsController.minY}" maxY="#{chartsController.maxY}" minX="0" maxX="#{chartsController.maxX}" style="height:300px"/>
+
+</h:form>
+
+</h:body>
+</ui:define>
+</ui:composition>
