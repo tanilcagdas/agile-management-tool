@@ -16,10 +16,10 @@
     http://www.springframework.org/schema/jee/spring-jee.xsd">
 
 		<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-			<property name="driverClassName" value="org.postgresql.Driver" />
-			<property name="url" value="jdbc:postgresql://localhost:5432/agile" />
-			<property name="username" value="postgres" />
-			<property name="password" value="123456" />
+			<property name="driverClassName" value="${filter.db.driverClassName}" />
+			<property name="url" value="${filter.db.url}" />
+			<property name="username" value="${filter.db.username}" />
+			<property name="password" value="${filter.db.password}" />
 		</bean>
 
 		<bean id="entityManagerFactory"
