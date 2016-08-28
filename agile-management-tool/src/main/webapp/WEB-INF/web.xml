@@ -19,6 +19,10 @@
     <param-name>javax.faces.FACELETS_LIBRARIES</param-name>
     <param-value>/WEB-INF/springsecurity.taglib.xml</param-value>
 </context-param>
+<context-param>
+    <param-name>spring.profiles.active</param-name>
+    <param-value>test</param-value>
+</context-param>
 
   <context-param>
     <param-name>javax.faces.DEFAULT_SUFFIX</param-name>

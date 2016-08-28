@@ -2,6 +2,7 @@
 package com.agile.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,6 +12,7 @@ import com.agile.beans.UserData;
 import com.agile.repository.UserRepository;
 
 @Service("userAuthenticationService")
+@Profile("live")
 public class UserAuthenticationService implements UserDetailsService {
 
 
