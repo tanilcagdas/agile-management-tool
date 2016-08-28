@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.authentication.encoding.MessageDigestPasswordEncoder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 
 import com.agile.beans.UserData;
@@ -32,7 +33,7 @@ import com.agile.ui.util.AgileConstants;
 @Controller
 public class UserController {
 	@Autowired
-	UserAuthenticationService uas;
+	UserDetailsService uas;
 
 	@Autowired
 	UserService userService;
@@ -177,11 +178,11 @@ public class UserController {
 		this.userName = userName;
 	}
 
-	public UserAuthenticationService getUas() {
+	public UserDetailsService getUas() {
 		return uas;
 	}
 
-	public void setUas(UserAuthenticationService uas) {
+	public void setUas(UserDetailsService uas) {
 		this.uas = uas;
 	}
 
