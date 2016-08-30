@@ -5,6 +5,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,12 +15,11 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import com.agile.beans.servicebean.IterationServiceBean;
 import com.agile.interfaces.IterationServiceIF;
 import com.agile.service.UserService;
+import com.google.gson.Gson;
 
 
 @Component
 @Path("iteration")
-//@RestController
-//@RequestMapping(value = "/iteration", produces = "application/json")
 public class IterationRestController {
 	
 	private List<IterationServiceBean> iterationList;
@@ -36,11 +37,9 @@ public class IterationRestController {
 	
 	
 
-//	@RequestMapping(value = "/addMembersToGroup", method = RequestMethod.POST)
 	@GET
     @Path("/list")
-//	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-	public Object list(
+	public Response list(
 //			@DefaultValue("0") @QueryParam("start") int start,
 //            @DefaultValue("10") @QueryParam("size") int size,
 //            @QueryParam("name") String deviceName,
@@ -49,9 +48,10 @@ public class IterationRestController {
             ) {
 			List<IterationServiceBean> result = iterationList = service.findAll();
 		
-		return result ;
+		return Response.ok(new Gson().toJson(result ), MediaType.APPLICATION_JSON).build();
 	}
-
+	
+	
 
 
 }
