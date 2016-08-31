@@ -1,0 +1,35 @@
+
+<body class="dt-example dt-example-bootstrap">
+	<section>
+		<div ng-app="webApp" ng-controller="iterationCtrl"
+			class="container">
+
+			<table id="iterations" class="table table-striped table-bordered"
+				cellspacing="0" width="100%">
+
+				<thead>
+					<tr>
+						<th>Name</th>
+					</tr>
+				</thead>
+
+				<tr ng-repeat="x in iterations">
+					<td>{{ x.name }}</td>
+					
+					<td>
+						<div >
+						<button ng-click="save()">SAVE</button>
+					</div>
+					<div >
+							<button ng-click="delete()">DELETE</button>
+					</div>
+						</td>
+				</tr>
+
+			</table>
+
+		</div>
+	</section>
+</body>
+
+<script src="js/main.js"></script>

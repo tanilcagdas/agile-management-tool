@@ -76,6 +76,7 @@
 	<http pattern="/ui/javax.faces.resource/**" security="none" />
 	<http pattern="/webresources/**" security="none" />
 	<http pattern="/rest/**" security="none" />
+	<http pattern="/app/**" security="none" />
 	<http pattern="/jquery/**" security="none" />
 	<http pattern="/css/**" security="none" />
 	<http pattern="/ui/errors/error.xhtml" security="none" />

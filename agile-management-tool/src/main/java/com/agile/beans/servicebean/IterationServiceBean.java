@@ -2,9 +2,12 @@ package com.agile.beans.servicebean;
 
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import com.agile.interfaces.ServiceBeanIF;
 import com.agile.ui.util.AgileConstants;
 
+@XmlRootElement
 public class IterationServiceBean implements ServiceBeanIF {
 	
 	public IterationServiceBean(){
