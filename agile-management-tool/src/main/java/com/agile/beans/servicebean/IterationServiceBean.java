@@ -58,6 +58,10 @@ public class IterationServiceBean implements ServiceBeanIF {
 	public Date getStartDate() {
 		return startDate;
 	}
+	
+	public Long getStartDateAsLong() {
+		return startDate.getTime();
+	}
 
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
@@ -65,6 +69,10 @@ public class IterationServiceBean implements ServiceBeanIF {
 
 	public Date getEndDate() {
 		return endDate;
+	}
+	
+	public Long getEndDateAsLong() {
+		return endDate.getTime();
 	}
 
 	public void setEndDate(Date endDate) {

@@ -1,7 +1,3 @@
-/**
- * AngularJS Tutorial 1
- * @author Nick Kaye <nick.c.kaye@gmail.com>
- */
 
 /**
  * Main AngularJS Web Application
@@ -16,7 +12,7 @@ var app = angular.module('webApp', [
 app.config(['$routeProvider', function ($routeProvider) {
   $routeProvider
     // Home
-    .when("/", {templateUrl: "partials/iteration.html", controller: "PageCtrl"})
+    .when("/", {templateUrl: "partials/userstory.html", controller: "PageCtrl"})
     // Pages
     .when("/iteration", {templateUrl: "partials/iteration.html", controller: "PageCtrl"})
     .when("/userstory", {templateUrl: "partials/userstory.html", controller: "PageCtrl"})

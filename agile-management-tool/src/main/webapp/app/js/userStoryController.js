@@ -1,8 +1,8 @@
-app.controller('iterationCtrl', function($scope, $http) {
+app.controller('userstoryCtrl', function($scope, $http) {
 	var req =
 	{ 
 			method: 'GET',
-			url: 'http://localhost:8080/agile-management-tool/webresources/iteration/list',
+			url: 'http://localhost:8080/agile-management-tool/webresources/userstory/list',
 			headers: {
 			   'Content-Type': undefined,
 			   'username' : 'admin'
@@ -11,8 +11,8 @@ app.controller('iterationCtrl', function($scope, $http) {
 			}
 	$http(req).then(function(response) {
 		var finalData = response.data;
-		$scope.iterations = finalData;
-		console.log($scope.iterations)
+		$scope.userstories = finalData;
+		console.log($scope.userstories)
 		
 	}, function errorCallback(response) {
 		alert();
@@ -23,27 +23,32 @@ app.controller('iterationCtrl', function($scope, $http) {
 	var saveReq =
 	{ 
 			method: 'POST',
-			url: 'http://localhost:8080/agile-management-tool/webresources/iteration/save',
+			url: 'http://localhost:8080/agile-management-tool/webresources/userstory/save',
 			headers: {
-			   'Content-Type': undefined,
+			   'Content-Type': 'application/json',
 			   'username' : 'admin'
 			 },
 			 data: { test: 'test' }
 			}
 
 	
-	 $scope.reserve = function() {
+	 $scope.save = function(item) {
+		$scope.item = item;
+
+		saveReq.data = item;
 		 $http(saveReq).then(function(response) {
-				$scope.iterations = response.data;
-				console.log($scope.iterations)
+//				$scope.userstories = response.data;
+				console.log($scope.userstories)
+				try {
+					$scope.userstories.find($scope.item);
+				} catch (e) {
+					console.log('couldnt find');
+				}
 				
 			}, function errorCallback(response) {
 			    // called asynchronously if an error occurs
 			    // or server returns response with an error status.
-				alert();
+				alert(response.status + " : " + response.statusText);
 			  });
 	    };
-
-	   
-	    
 });

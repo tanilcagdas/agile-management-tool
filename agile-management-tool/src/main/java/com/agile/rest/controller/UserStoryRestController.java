@@ -7,20 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
-import com.agile.beans.servicebean.IterationServiceBean;
-import com.agile.interfaces.IterationServiceIF;
-import com.agile.service.UserService;
+import com.agile.beans.servicebean.UserStoryServiceBean;
+import com.agile.interfaces.UserStoryServiceIF;
 
 
 @Component
-@Path("iteration")
-public class IterationRestController extends BaseRestController<IterationServiceBean>{
+@Path("userstory")
+public class UserStoryRestController extends BaseRestController<UserStoryServiceBean>{
 	
 	@Autowired
-	IterationServiceIF service;
-
-	@Autowired
-	UserService userService;
+	private UserStoryServiceIF service;
 	
 	@PostConstruct
 	public void init(){

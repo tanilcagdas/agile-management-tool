@@ -10,26 +10,31 @@
 				<thead>
 					<tr>
 						<th>Name</th>
+						<th>Owner</th>
+						<th>Start</th>
+						<th>End</th>
+						<th>Duration</th>
 					</tr>
 				</thead>
 
 				<tr ng-repeat="x in iterations">
 					<td>{{ x.name }}</td>
+					<td>{{ x.owner.username }}</td>
+					<td>{{ x.startDate | date : shortDate  }}</td>
+					<td>{{ x.endDate | date : shortDate }}</td>
+					<td>{{ x.days }}</td>
 					
 					<td>
 						<div >
-						<button ng-click="save()">SAVE</button>
-					</div>
-					<div >
-							<button ng-click="delete()">DELETE</button>
+						<button ng-click="save(x)">SAVE</button>
+							<button ng-click="delete(x)">DELETE</button>
 					</div>
 						</td>
 				</tr>
 
 			</table>
+			
 
 		</div>
 	</section>
 </body>
-
-<script src="js/main.js"></script>
