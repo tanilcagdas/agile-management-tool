@@ -1,8 +1,10 @@
+var baseUrl = window.location.origin;
+
 app.controller('iterationCtrl', function($scope, $http) {
 	var req =
 	{ 
 			method: 'GET',
-			url: 'http://localhost:8080/agile-management-tool/webresources/iteration/list',
+			url: baseUrl+'/webresources/iteration/list',
 			headers: {
 			   'Content-Type': undefined,
 			   'username' : 'admin'
@@ -23,7 +25,7 @@ app.controller('iterationCtrl', function($scope, $http) {
 	var saveReq =
 	{ 
 			method: 'POST',
-			url: 'http://localhost:8080/agile-management-tool/webresources/iteration/save',
+			url: baseUrl+'/webresources/iteration/save',
 			headers: {
 			   'Content-Type': undefined,
 			   'username' : 'admin'
