@@ -1,0 +1,16 @@
+<div ng-controller="iterationCtrl">
+	<div class="modal-header">
+		<h3 class="modal-title">NEW ITERAION</h3>
+	</div>
+	<div class="modal-body">
+		<input type="text" ng-model="newUserStory.name">
+				<select ng-model="newUserStory.owner" ng-options="x as x.username for x in owners"></select>
+				<select ng-model="newUserStory.iteration" ng-options="iteration as iteration.name for iteration in iterations"></select>
+
+
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+		<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+	</div>
+</div>

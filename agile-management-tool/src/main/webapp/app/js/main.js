@@ -1,4 +1,6 @@
-
+var baseUrl = window.location.origin;
+var path = window.location.pathname.substring(0, window.location.pathname
+		.indexOf("/", 2));
 /**
  * Main AngularJS Web Application
  */
