@@ -1,8 +1,11 @@
+var baseUrl = window.location.origin;
+var path = window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
+
 app.controller('userstoryCtrl', function($scope, $http) {
 	var req =
 	{ 
 			method: 'GET',
-			url: 'http://localhost:8080/agile-management-tool/webresources/userstory/list',
+			url: baseUrl+path+'/webresources/userstory/list',
 			headers: {
 			   'Content-Type': undefined,
 			   'username' : 'admin'
@@ -23,7 +26,7 @@ app.controller('userstoryCtrl', function($scope, $http) {
 	var saveReq =
 	{ 
 			method: 'POST',
-			url: 'http://localhost:8080/agile-management-tool/webresources/userstory/save',
+			url: baseUrl+path+'/webresources/userstory/save',
 			headers: {
 			   'Content-Type': 'application/json',
 			   'username' : 'admin'
