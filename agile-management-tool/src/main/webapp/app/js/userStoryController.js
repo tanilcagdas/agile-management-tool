@@ -16,7 +16,12 @@ app.controller('userstoryCtrl', function($scope, $uibModal, $log,
 		});
 	};
 
-	$scope.owners = UserService.owners();
+	UserService.listAll().then(function(response) {
+		$scope.owners = response.data;
+		console.log($scope.owners);
+	}, function errorCallback(response) {
+		alert(response.status + " : " + response.statusText);
+	});
 
 	$scope.animationsEnabled = true;
 

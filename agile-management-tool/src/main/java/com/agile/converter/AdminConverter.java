@@ -7,13 +7,13 @@ import com.agile.beans.AdminUserData;
 import com.agile.beans.UserData;
 import com.agile.beans.servicebean.AdminUserServiceBean;
 import com.agile.beans.servicebean.UserServiceBean;
-import com.agile.service.UserService;
+import com.agile.interfaces.UserServiceIF;
 
 @Service
 public class AdminConverter {
 	
 	@Autowired
-	UserService userService;
+	UserServiceIF userService;
 
 	public AdminUserServiceBean convert(UserServiceBean user) {
 		AdminUserServiceBean productOwner = new AdminUserServiceBean();

@@ -16,7 +16,6 @@ import com.agile.beans.servicebean.UserServiceBean;
 import com.agile.converter.ScrumTeamConverter;
 import com.agile.converter.UserConverter;
 import com.agile.interfaces.ScrumTeamServiceIF;
-import com.agile.interfaces.ServiceBeanIF;
 import com.agile.repository.ScrumTeamRepository;
 import com.agile.repository.UserRepository;
 
@@ -41,8 +40,7 @@ public class ScrumTeamService implements ScrumTeamServiceIF{
 
 	@Override
 	@Transactional
-	public
-	<T extends ServiceBeanIF> T save(T item) {
+	public ScrumTeamServiceBean save(ScrumTeamServiceBean item) {
 		if (findOne(((ScrumTeamServiceBean) item).getName()) != null) {
 			scrumTeamData = repository.findOne(((ScrumTeamServiceBean) item).getName());
 		} else {
@@ -76,31 +74,31 @@ public class ScrumTeamService implements ScrumTeamServiceIF{
 	}
 
 	@Override
-	public <T extends ServiceBeanIF> void delete(T item) {
+	public  void delete(ScrumTeamServiceBean item) {
 		repository.delete(converter.convert((ScrumTeamServiceBean)item,scrumTeamData));
 		
 	}
 
 	@Override
-	public <T extends ServiceBeanIF> T findOne(String name) {
+	public  ScrumTeamServiceBean findOne(String name) {
 		ScrumTeamServiceBean scrumTeam = new ScrumTeamServiceBean();
 		ScrumTeamData scrumTeamData = repository.findOne(name);
 		if (scrumTeamData == null) {
 			return null;
 		} else {
 			converter.convert(scrumTeamData, scrumTeam);
-		return (T) scrumTeam;
+		return scrumTeam;
 		}
 	}
 
 	@Override
-	public <T extends ServiceBeanIF> List<T> findAll() {
+	public  List<ScrumTeamServiceBean> findAll() {
 		List<ScrumTeamData> scrumTeamDataList = repository.findAll();
-		List<T> scrumTeamList = new ArrayList<>();
+		List<ScrumTeamServiceBean> scrumTeamList = new ArrayList<>();
 		for (ScrumTeamData scrumTeam : scrumTeamDataList) {
-			scrumTeamList.add((T) converter.convert(scrumTeam,new ScrumTeamServiceBean()));
+			scrumTeamList.add( converter.convert(scrumTeam,new ScrumTeamServiceBean()));
 		}
-		return (List<T>) scrumTeamList ;
+		return  scrumTeamList ;
 	}
 	
 	@Override

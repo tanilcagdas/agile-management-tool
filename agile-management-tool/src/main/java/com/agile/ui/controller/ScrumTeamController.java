@@ -22,8 +22,7 @@ import com.agile.converter.ProductOwnerConverter;
 import com.agile.converter.ScrumMasterConverter;
 import com.agile.interfaces.ScrumTeamServiceIF;
 import com.agile.interfaces.ServiceBeanIF;
-import com.agile.interfaces.ServiceIF;
-import com.agile.service.UserService;
+import com.agile.interfaces.UserServiceIF;
 
 @Scope("session")
 @Controller
@@ -42,7 +41,7 @@ public class ScrumTeamController {
 	ScrumTeamServiceIF service;
 
 	@Autowired
-	UserService userService;
+	UserServiceIF userService;
 	
 	@Autowired
 	ProductOwnerConverter productOwnerConverter;

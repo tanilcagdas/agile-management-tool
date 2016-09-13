@@ -1,7 +1,6 @@
 package com.agile.ui.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -16,8 +15,7 @@ import com.agile.beans.servicebean.IterationServiceBean;
 import com.agile.beans.servicebean.UserServiceBean;
 import com.agile.interfaces.IterationServiceIF;
 import com.agile.interfaces.ServiceBeanIF;
-import com.agile.interfaces.ServiceIF;
-import com.agile.service.UserService;
+import com.agile.interfaces.UserServiceIF;
 import com.agile.ui.util.AgileConstants;
 
 @Scope("session")
@@ -30,7 +28,7 @@ public class IterationController {
 	IterationServiceIF service;
 
 	@Autowired
-	UserService userService;
+	UserServiceIF userService;
 
 	FacesMessage fm = null;
 

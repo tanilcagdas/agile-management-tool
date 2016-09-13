@@ -24,9 +24,8 @@ import com.agile.converter.AdminConverter;
 import com.agile.converter.DeveloperConverter;
 import com.agile.converter.ProductOwnerConverter;
 import com.agile.converter.ScrumMasterConverter;
+import com.agile.interfaces.UserServiceIF;
 import com.agile.repository.security.AuthorityRepository;
-import com.agile.service.UserAuthenticationService;
-import com.agile.service.UserService;
 import com.agile.ui.util.AgileConstants;
 
 @Scope("session")
@@ -36,7 +35,7 @@ public class UserController {
 	UserDetailsService uas;
 
 	@Autowired
-	UserService userService;
+	UserServiceIF userService;
 
 	@Autowired
 	AuthorityRepository authRep;

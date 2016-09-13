@@ -13,10 +13,9 @@ import org.springframework.stereotype.Controller;
 import com.agile.beans.servicebean.TaskServiceBean;
 import com.agile.beans.servicebean.UserServiceBean;
 import com.agile.beans.servicebean.UserStoryServiceBean;
-import com.agile.interfaces.ServiceIF;
 import com.agile.interfaces.TaskServiceIF;
+import com.agile.interfaces.UserServiceIF;
 import com.agile.interfaces.UserStoryServiceIF;
-import com.agile.service.UserService;
 
 @Scope("session")
 @Controller
@@ -29,7 +28,7 @@ public class TaskController {
 	TaskServiceIF taskService;
 
 	@Autowired
-	UserService userService;
+	UserServiceIF userService;
 
 	@Autowired
 	UserStoryServiceIF userStoryService;

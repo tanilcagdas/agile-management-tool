@@ -21,6 +21,7 @@ app.config(['$routeProvider', function ($routeProvider) {
     // Pages
     .when("/iteration", {templateUrl: "partials/iteration.html", controller: "PageCtrl"})
     .when("/userstory", {templateUrl: "partials/userstory.html", controller: "PageCtrl"})
+    .when("/users", {templateUrl: "partials/users.html", controller: "PageCtrl"})
  
     // Blog
 

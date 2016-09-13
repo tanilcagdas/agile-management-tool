@@ -1,0 +1,44 @@
+
+<body class="dt-example dt-example-bootstrap">
+	<section>
+		<div ng-app="webApp">
+
+			<div ng-controller="userCtrl" class="container">
+
+				<table id="users" class="table table-striped table-bordered"
+					cellspacing="0" width="100%">
+
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Role</th>
+						</tr>
+					</thead>
+
+					<tr ng-repeat="x in users">
+						<td>{{ x.username }}</td>
+						<td>{{ x.authority.name }}</td>
+
+						<td>
+							<div>
+								<button ng-click="save(x)">SAVE</button>
+								<button ng-click="delete(x)">DELETE</button>
+							</div>
+						</td>
+					</tr>
+
+				</table>
+			<button ng-click="open()">add</button>
+				<div ng-show="selected">Selection from a modal: {{ selected }}</div>
+
+			</div>
+			
+
+
+		</div>
+
+	</section>
+
+</body>
+
+

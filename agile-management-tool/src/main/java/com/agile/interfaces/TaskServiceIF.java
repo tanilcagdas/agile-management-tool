@@ -6,9 +6,8 @@ import com.agile.beans.servicebean.TaskServiceBean;
 import com.agile.beans.servicebean.UserServiceBean;
 
 
-public interface TaskServiceIF extends ServiceIF{
+public interface TaskServiceIF extends ServiceIF<TaskServiceBean>{
 	
-	@SuppressWarnings("unchecked")
 	List<TaskServiceBean> findByOwner(UserServiceBean user); 
 
 }

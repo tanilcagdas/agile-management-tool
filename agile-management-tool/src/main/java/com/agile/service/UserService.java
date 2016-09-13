@@ -17,10 +17,12 @@ import com.agile.beans.servicebean.ProductOwnerUserServiceBean;
 import com.agile.beans.servicebean.ScrumMasterUserServiceBean;
 import com.agile.beans.servicebean.UserServiceBean;
 import com.agile.converter.UserConverter;
+import com.agile.interfaces.ServiceBeanIF;
+import com.agile.interfaces.UserServiceIF;
 import com.agile.repository.UserRepository;
 
 @Service
-public class UserService {
+public class UserService implements UserServiceIF{
 
 	@Autowired
 	UserRepository<UserData, ?> userRepository;
@@ -28,6 +30,10 @@ public class UserService {
 	@Autowired
 	UserConverter userConverter;
 
+	/* (non-Javadoc)
+	 * @see com.agile.service.UserServiceIF#save(com.agile.beans.servicebean.UserServiceBean)
+	 */
+	@Override
 	public UserServiceBean save(UserServiceBean user) {
 		UserData userData = null;
 		if (findOne(user.getUsername()) != null) {
@@ -52,12 +58,20 @@ public class UserService {
 		return user;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.agile.service.UserServiceIF#delete(com.agile.beans.servicebean.UserServiceBean)
+	 */
+	@Override
 	public void delete(UserServiceBean user) {
 		UserData userData = null;
 		userData = userRepository.findOne(user.getUsername());
 		userRepository.delete(userData);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.agile.service.UserServiceIF#findOne(java.lang.String)
+	 */
+	@Override
 	public UserServiceBean findOne(String userName) {
 		UserData userData = (UserData) userRepository.findOne(userName);
 		if (userData == null) {
@@ -67,6 +81,10 @@ public class UserService {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see com.agile.service.UserServiceIF#findAll()
+	 */
+	@Override
 	public List<UserServiceBean> findAll() {
 		List<UserData> userList = userRepository.findAll();
 		List<UserServiceBean> userSBList = new ArrayList<>();
@@ -76,7 +94,17 @@ public class UserService {
 		return userSBList;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.agile.service.UserServiceIF#count()
+	 */
+	@Override
 	public long count() {
 		return userRepository.count();
+	}
+
+	@Override
+	public List<UserServiceBean> findByOwner(UserServiceBean user) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

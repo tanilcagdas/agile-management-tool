@@ -7,13 +7,13 @@ import com.agile.beans.ScrumMasterUserData;
 import com.agile.beans.UserData;
 import com.agile.beans.servicebean.ScrumMasterUserServiceBean;
 import com.agile.beans.servicebean.UserServiceBean;
-import com.agile.service.UserService;
+import com.agile.interfaces.UserServiceIF;
 
 @Service
 public class ScrumMasterConverter {
 	
 	@Autowired
-	UserService userService;
+	UserServiceIF userService;
 
 	public ScrumMasterUserServiceBean convert(UserServiceBean user) {
 		ScrumMasterUserServiceBean productOwner = new ScrumMasterUserServiceBean();

@@ -16,11 +16,9 @@ import com.agile.beans.servicebean.UserServiceBean;
 import com.agile.converter.TaskConverter;
 import com.agile.converter.UserConverter;
 import com.agile.fw.AgileUtil;
-import com.agile.interfaces.ServiceBeanIF;
 import com.agile.interfaces.TaskServiceIF;
 import com.agile.repository.TaskChartRepository;
 import com.agile.repository.TaskRepository;
-import com.agile.ui.util.AgileConstants;
 
 @Service
 public class TaskService implements TaskServiceIF {
@@ -42,9 +40,9 @@ public class TaskService implements TaskServiceIF {
 
 	@Override
 	@Transactional
-	public <T extends ServiceBeanIF> T save(T item) {
+	public  TaskServiceBean save(TaskServiceBean item) {
 		taskData = converter.convert((TaskServiceBean) item, this.taskData);
-		item = (T) converter.convert(repository.save(taskData), taskServiceBean);
+		item =  converter.convert(repository.save(taskData), taskServiceBean);
 		List<TaskChartData> taskChartList = taskChartRepository.findAll();
 		boolean found = false;
 		Date date = AgileUtil.getToday();
@@ -80,31 +78,31 @@ public class TaskService implements TaskServiceIF {
 	}
 
 	@Override
-	public <T extends ServiceBeanIF> void delete(T item) {
+	public  void delete(TaskServiceBean item) {
 		repository.delete(converter.convert((TaskServiceBean) item, taskData));
 
 	}
 
 	@Override
-	public <T extends ServiceBeanIF> T findOne(String name) {
+	public TaskServiceBean findOne(String name) {
 		TaskServiceBean task = new TaskServiceBean();
 		TaskData taskData = (TaskData) repository.findOne(name);
 		if (taskData == null) {
 			return null;
 		} else {
 			converter.convert(taskData, task);
-			return (T) task;
+			return task;
 		}
 	}
 
 	@Override
-	public <T extends ServiceBeanIF> List<T> findAll() {
+	public  List<TaskServiceBean> findAll() {
 		List<TaskData> taskDataList = repository.findAll();
-		List<T> taskList = new ArrayList<>();
+		List<TaskServiceBean> taskList = new ArrayList<>();
 		for (TaskData task : taskDataList) {
-			taskList.add((T) converter.convert(task, new TaskServiceBean()));
+			taskList.add( converter.convert(task, new TaskServiceBean()));
 		}
-		return (List<T>) taskList;
+		return taskList;
 	}
 
 	@Override

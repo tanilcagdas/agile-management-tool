@@ -22,7 +22,12 @@ app.controller('iterationCtrl', function($scope, $uibModal, $log, UserService, I
 		});
 	};
 	
-	$scope.owners = UserService.owners();
+	UserService.listAll().then(function(response) {
+		$scope.owners = response.data;
+		console.log($scope.owners);
+	}, function errorCallback(response) {
+		alert(response.status + " : " + response.statusText);
+	});
 
 	$scope.animationsEnabled = true;
 

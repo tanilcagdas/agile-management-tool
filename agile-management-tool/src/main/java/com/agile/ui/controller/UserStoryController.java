@@ -16,8 +16,8 @@ import com.agile.beans.servicebean.UserServiceBean;
 import com.agile.beans.servicebean.UserStoryServiceBean;
 import com.agile.interfaces.IterationServiceIF;
 import com.agile.interfaces.ServiceBeanIF;
+import com.agile.interfaces.UserServiceIF;
 import com.agile.interfaces.UserStoryServiceIF;
-import com.agile.service.UserService;
 
 @Scope("session")
 @Controller
@@ -32,7 +32,7 @@ public class UserStoryController {
 	IterationServiceIF iterationService;
 
 	@Autowired 
-	UserService userService;
+	UserServiceIF userService;
 	
 	FacesMessage fm = null;
 	

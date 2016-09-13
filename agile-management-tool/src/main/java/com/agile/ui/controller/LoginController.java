@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import com.agile.service.UserService;
+import com.agile.interfaces.UserServiceIF;
 
 @Controller
 @Scope("request")
@@ -23,7 +23,7 @@ public class LoginController {
 	static Date loginDate = null;
 	
 	@Autowired
-	UserService userService;
+	UserServiceIF userService;
 
    public static String doLogin() throws IOException, ServletException {
       ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();

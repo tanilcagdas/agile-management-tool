@@ -14,7 +14,6 @@ import com.agile.beans.servicebean.UserServiceBean;
 import com.agile.converter.IterationConverter;
 import com.agile.converter.UserConverter;
 import com.agile.interfaces.IterationServiceIF;
-import com.agile.interfaces.ServiceBeanIF;
 import com.agile.repository.IterationRepository;
 
 @Service
@@ -35,8 +34,7 @@ public class IterationService implements IterationServiceIF {
 
 	@Override
 	@Transactional
-	public
-	<T extends ServiceBeanIF> T save(T item) {
+	public IterationServiceBean save(IterationServiceBean item) {
 		if (findOne(((IterationServiceBean) item).getName()) != null) {
 			iterationData = repository.findOne(((IterationServiceBean) item).getName());
 		} else {
@@ -50,30 +48,30 @@ public class IterationService implements IterationServiceIF {
 	}
 
 	@Override
-	public <T extends ServiceBeanIF> void delete(T item) {
+	public void delete(IterationServiceBean item) {
 		repository.delete(converter.convert((IterationServiceBean)item,iterationData));
 	}
 
 	@Override
-	public <T extends ServiceBeanIF> T findOne(String name) {
+	public IterationServiceBean findOne(String name) {
 		IterationServiceBean iteration = new IterationServiceBean();
 		IterationData iterationData = (IterationData) repository.findOne(name);
 		if (iterationData == null) {
 			return null;
 		} else {
 			converter.convert(iterationData, iteration);
-			return (T) iteration;
+			return iteration;
 		}
 	}
 
 	@Override
-	public <T extends ServiceBeanIF> List<T> findAll() {
+	public  List<IterationServiceBean> findAll() {
 		List<IterationData> iterationDataList = repository.findAll();
-		List<T> iterationList = new ArrayList<>();
+		List<IterationServiceBean> iterationList = new ArrayList<>();
 		for (IterationData epic : iterationDataList) {
-			iterationList.add((T) converter.convert(epic,new IterationServiceBean()));
+			iterationList.add((IterationServiceBean) converter.convert(epic,new IterationServiceBean()));
 		}
-		return (List<T>) iterationList ;
+		return iterationList ;
 	}
 	
 	@Override

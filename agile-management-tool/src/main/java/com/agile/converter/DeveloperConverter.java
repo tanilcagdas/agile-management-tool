@@ -7,13 +7,13 @@ import com.agile.beans.DeveloperUserData;
 import com.agile.beans.UserData;
 import com.agile.beans.servicebean.DeveloperUserServiceBean;
 import com.agile.beans.servicebean.UserServiceBean;
-import com.agile.service.UserService;
+import com.agile.interfaces.UserServiceIF;
 
 @Service
 public class DeveloperConverter {
 	
 	@Autowired
-	UserService userService;
+	UserServiceIF userService;
 
 	public DeveloperUserServiceBean convert(UserServiceBean user) {
 		DeveloperUserServiceBean productOwner = new DeveloperUserServiceBean();
