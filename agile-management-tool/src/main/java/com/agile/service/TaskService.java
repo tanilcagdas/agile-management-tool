@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +24,7 @@ import com.agile.repository.TaskChartRepository;
 import com.agile.repository.TaskRepository;
 
 @Service
-public class TaskService implements TaskServiceIF {
+public class TaskService extends BaseService<TaskServiceBean,TaskData>  implements TaskServiceIF {
 
 	@Autowired
 	TaskRepository repository;
@@ -37,6 +40,13 @@ public class TaskService implements TaskServiceIF {
 
 	TaskData taskData = null;
 	TaskServiceBean taskServiceBean;
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@PostConstruct
+	public void init() {
+		super.repository = (JpaRepository)repository;
+		super.converter = converter;
+	}
 
 	@Override
 	@Transactional
@@ -93,16 +103,6 @@ public class TaskService implements TaskServiceIF {
 			converter.convert(taskData, task);
 			return task;
 		}
-	}
-
-	@Override
-	public  List<TaskServiceBean> findAll() {
-		List<TaskData> taskDataList = repository.findAll();
-		List<TaskServiceBean> taskList = new ArrayList<>();
-		for (TaskData task : taskDataList) {
-			taskList.add( converter.convert(task, new TaskServiceBean()));
-		}
-		return taskList;
 	}
 
 	@Override

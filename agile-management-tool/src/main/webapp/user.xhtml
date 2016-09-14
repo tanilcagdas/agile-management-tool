@@ -18,6 +18,9 @@ xmlns="http://www.w3.org/1999/xhtml"
 
 	<ui:define name="content">
 <h:body>
+     <f:metadata>
+          <f:event type="preRenderView" listener="#{userController.onPageLoad}"/>
+      </f:metadata>
 	<f:view>
 
 		<h:form>

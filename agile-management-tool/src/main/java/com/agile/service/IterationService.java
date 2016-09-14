@@ -3,7 +3,10 @@ package com.agile.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +20,7 @@ import com.agile.interfaces.IterationServiceIF;
 import com.agile.repository.IterationRepository;
 
 @Service
-public class IterationService implements IterationServiceIF {
+public class IterationService extends BaseService<IterationServiceBean,IterationData> implements IterationServiceIF {
 
 	@Autowired
 	IterationRepository repository;
@@ -31,6 +34,13 @@ public class IterationService implements IterationServiceIF {
 	UserConverter userConverter;
 	
 	IterationServiceBean iterationServiceBean;
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@PostConstruct
+	public void init() {
+		super.repository = (JpaRepository)repository;
+		super.converter = converter;
+	}
 
 	@Override
 	@Transactional
@@ -48,11 +58,6 @@ public class IterationService implements IterationServiceIF {
 	}
 
 	@Override
-	public void delete(IterationServiceBean item) {
-		repository.delete(converter.convert((IterationServiceBean)item,iterationData));
-	}
-
-	@Override
 	public IterationServiceBean findOne(String name) {
 		IterationServiceBean iteration = new IterationServiceBean();
 		IterationData iterationData = (IterationData) repository.findOne(name);
@@ -64,16 +69,6 @@ public class IterationService implements IterationServiceIF {
 		}
 	}
 
-	@Override
-	public  List<IterationServiceBean> findAll() {
-		List<IterationData> iterationDataList = repository.findAll();
-		List<IterationServiceBean> iterationList = new ArrayList<>();
-		for (IterationData epic : iterationDataList) {
-			iterationList.add((IterationServiceBean) converter.convert(epic,new IterationServiceBean()));
-		}
-		return iterationList ;
-	}
-	
 	@Override
 	public List<IterationServiceBean> findByOwner(UserServiceBean user) {
 		

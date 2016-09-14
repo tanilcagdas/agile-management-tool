@@ -50,7 +50,7 @@ public class UserConverter implements ConverterIF<UserServiceBean, UserData> {
 
 	@Override
 	public UserServiceBean convert(UserData userData, UserServiceBean user) {
-		if (user == null) {
+//		if (user == null) {
 			if(userData instanceof DeveloperUserData){
 				user = new DeveloperUserServiceBean();
 				if(((DeveloperUserData) userData).getScrumTeam()!=null){
@@ -74,7 +74,7 @@ public class UserConverter implements ConverterIF<UserServiceBean, UserData> {
 			}else {
 				user = new UserServiceBean();
 			}
-		}
+//		}
 		user.setUsername(userData.getUsername());
 		user.setPassword(userData.getPassword());
 		AuthorityServiceBean authority = new AuthorityServiceBean();

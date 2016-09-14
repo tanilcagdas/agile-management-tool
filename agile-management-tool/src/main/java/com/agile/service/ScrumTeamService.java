@@ -3,7 +3,10 @@ package com.agile.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +23,7 @@ import com.agile.repository.ScrumTeamRepository;
 import com.agile.repository.UserRepository;
 
 @Service
-public class ScrumTeamService implements ScrumTeamServiceIF{
+public class ScrumTeamService extends BaseService<ScrumTeamServiceBean,ScrumTeamData> implements ScrumTeamServiceIF{
 
 	@Autowired
 	ScrumTeamRepository repository;
@@ -37,6 +40,13 @@ public class ScrumTeamService implements ScrumTeamServiceIF{
 	ScrumTeamData scrumTeamData;
 	
 	ScrumTeamServiceBean scrumTeamServiceBean;
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@PostConstruct
+	public void init() {
+		super.repository = (JpaRepository)repository;
+		super.converter = converter;
+	}
 
 	@Override
 	@Transactional
@@ -74,12 +84,6 @@ public class ScrumTeamService implements ScrumTeamServiceIF{
 	}
 
 	@Override
-	public  void delete(ScrumTeamServiceBean item) {
-		repository.delete(converter.convert((ScrumTeamServiceBean)item,scrumTeamData));
-		
-	}
-
-	@Override
 	public  ScrumTeamServiceBean findOne(String name) {
 		ScrumTeamServiceBean scrumTeam = new ScrumTeamServiceBean();
 		ScrumTeamData scrumTeamData = repository.findOne(name);
@@ -91,22 +95,13 @@ public class ScrumTeamService implements ScrumTeamServiceIF{
 		}
 	}
 
-	@Override
-	public  List<ScrumTeamServiceBean> findAll() {
-		List<ScrumTeamData> scrumTeamDataList = repository.findAll();
-		List<ScrumTeamServiceBean> scrumTeamList = new ArrayList<>();
-		for (ScrumTeamData scrumTeam : scrumTeamDataList) {
-			scrumTeamList.add( converter.convert(scrumTeam,new ScrumTeamServiceBean()));
-		}
-		return  scrumTeamList ;
-	}
 	
 	@Override
 	public List<ScrumTeamServiceBean> findByOwner(UserServiceBean user) {
 		
 		UserData userData = null;
 		userData = userConverter.convert(user, userData);
-		List<ScrumTeamData> scrumTeamDataList = repository.findByProductOwner(userData);
+		List<ScrumTeamData> scrumTeamDataList = repository.findByProductOwner((ProductOwnerUserData) userData);
 		List<ScrumTeamServiceBean> scrumTeamList = new ArrayList<>();
 		for (ScrumTeamData scrumTeamData : scrumTeamDataList) {
 			scrumTeamList.add(converter.convert(scrumTeamData, new ScrumTeamServiceBean()));

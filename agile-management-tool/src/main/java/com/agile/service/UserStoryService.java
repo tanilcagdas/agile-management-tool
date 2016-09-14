@@ -3,7 +3,10 @@ package com.agile.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +20,7 @@ import com.agile.interfaces.UserStoryServiceIF;
 import com.agile.repository.UserStoryRepository;
 
 @Service
-public class UserStoryService implements UserStoryServiceIF {
+public class UserStoryService extends BaseService<UserStoryServiceBean,UserStoryData> implements UserStoryServiceIF {
 
 	@Autowired
 	UserStoryRepository repository;
@@ -30,6 +33,13 @@ public class UserStoryService implements UserStoryServiceIF {
 
 	UserStoryServiceBean userStory = null;
 	UserStoryData userStoryData = null;
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@PostConstruct
+	public void init() {
+		super.repository = (JpaRepository)repository;
+		super.converter = converter;
+	}
 
 	@Override
 	@Transactional
@@ -70,15 +80,15 @@ public class UserStoryService implements UserStoryServiceIF {
 
 	}
 
-	@Override
-	public List<UserStoryServiceBean> findAll() {
-		List<UserStoryData> userStoryDataList = repository.findAll();
-		List<UserStoryServiceBean> userStoryList = new ArrayList<>();
-		for (UserStoryData userStory : userStoryDataList) {
-			userStoryList.add(converter.convert(userStory, new UserStoryServiceBean()));
-		}
-		return userStoryList;
-	}
+//	@Override
+//	public List<UserStoryServiceBean> findAll() {
+//		List<UserStoryData> userStoryDataList = repository.findAll();
+//		List<UserStoryServiceBean> userStoryList = new ArrayList<>();
+//		for (UserStoryData userStory : userStoryDataList) {
+//			userStoryList.add(converter.convert(userStory, new UserStoryServiceBean()));
+//		}
+//		return userStoryList;
+//	}
 
 	@Override
 	public List<UserStoryServiceBean> findByOwner(UserServiceBean user) {

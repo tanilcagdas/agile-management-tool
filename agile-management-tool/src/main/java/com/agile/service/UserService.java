@@ -1,9 +1,11 @@
 package com.agile.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import com.agile.beans.AdminUserData;
@@ -17,18 +19,24 @@ import com.agile.beans.servicebean.ProductOwnerUserServiceBean;
 import com.agile.beans.servicebean.ScrumMasterUserServiceBean;
 import com.agile.beans.servicebean.UserServiceBean;
 import com.agile.converter.UserConverter;
-import com.agile.interfaces.ServiceBeanIF;
 import com.agile.interfaces.UserServiceIF;
 import com.agile.repository.UserRepository;
 
 @Service
-public class UserService implements UserServiceIF{
+public class UserService extends BaseService<UserServiceBean,UserData>  implements UserServiceIF{
 
 	@Autowired
 	UserRepository<UserData, ?> userRepository;
 
 	@Autowired
 	UserConverter userConverter;
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@PostConstruct
+	public void init() {
+		super.repository = (JpaRepository)userRepository;
+		super.converter = userConverter;
+	}
 
 	/* (non-Javadoc)
 	 * @see com.agile.service.UserServiceIF#save(com.agile.beans.servicebean.UserServiceBean)
@@ -67,32 +75,24 @@ public class UserService implements UserServiceIF{
 		userData = userRepository.findOne(user.getUsername());
 		userRepository.delete(userData);
 	}
+	
+	@Override
+	public List<UserServiceBean> findAll(){
+		return super.findAll();
+	}
 
 	/* (non-Javadoc)
 	 * @see com.agile.service.UserServiceIF#findOne(java.lang.String)
 	 */
-	@Override
-	public UserServiceBean findOne(String userName) {
-		UserData userData = (UserData) userRepository.findOne(userName);
-		if (userData == null) {
-			return null;
-		} else {
-			return userConverter.convert(userData, null);
-		}
-	}
-
-	/* (non-Javadoc)
-	 * @see com.agile.service.UserServiceIF#findAll()
-	 */
-	@Override
-	public List<UserServiceBean> findAll() {
-		List<UserData> userList = userRepository.findAll();
-		List<UserServiceBean> userSBList = new ArrayList<>();
-		for (UserData userData : userList) {
-			userSBList.add(userConverter.convert(userData, null));
-		}
-		return userSBList;
-	}
+//	@Override
+//	public UserServiceBean findOne(String userName) {
+//		UserData userData = (UserData) userRepository.findOne(userName);
+//		if (userData == null) {
+//			return null;
+//		} else {
+//			return userConverter.convert(userData, null);
+//		}
+//	}
 
 	/* (non-Javadoc)
 	 * @see com.agile.service.UserServiceIF#count()

@@ -39,33 +39,41 @@ public class UserController {
 
 	@Autowired
 	AuthorityRepository authRep;
-	
+
 	@Autowired
 	private ProductOwnerConverter productOwnerConverter;
-	
+
 	@Autowired
 	private ScrumMasterConverter scrumMasterConverter;
-	
+
 	@Autowired
 	private DeveloperConverter developerConverter;
-	
+
 	@Autowired
 	private AdminConverter adminConverter;
 
 	private String userName;
-	
+
 	private UserServiceBean selectedUser;
-	
+
 	private String password;
-	
+
 	private List<UserServiceBean> userList;
-	
+
 	private String userType;
 
 	private FacesMessage fm = null;
 
+	private boolean add;
+
 	@PostConstruct
 	public void init() {
+		findAll();
+
+	}
+
+	public void onPageLoad() {
+		if(!add)
 		findAll();
 
 	}
@@ -82,6 +90,7 @@ public class UserController {
 		user.setAuthority(new AuthorityServiceBean());
 		user = encryptPassword(user, "password");
 		userList.add(user);
+		add = true;
 		return "";
 	}
 
@@ -103,8 +112,9 @@ public class UserController {
 	public String save() {
 		for (UserServiceBean user : userList) {
 			userService.save(user);
-			findAll();
 		}
+		add = false;
+		findAll();
 		FacesMessage fm = new FacesMessage("save succesfull", null);
 		FacesContext.getCurrentInstance().addMessage(null, fm);
 		return "";
@@ -127,6 +137,7 @@ public class UserController {
 
 	public String saveOne() {
 		userService.save(selectedUser);
+		add = false;
 		return "";
 	}
 
@@ -165,7 +176,9 @@ public class UserController {
 	}
 
 	public List<String> getUserTypeList() {
-		ArrayList<String> userTypeList = new ArrayList<String>(Arrays.asList(AgileConstants.ADMIN_USER_TYPE, AgileConstants.DEVELOPER_USER_TYPE, AgileConstants.PRODUCT_OWNER_USER_TYPE, AgileConstants.SCRUM_MASTER_USER_TYPE));
+		ArrayList<String> userTypeList = new ArrayList<String>(
+				Arrays.asList(AgileConstants.ADMIN_USER_TYPE, AgileConstants.DEVELOPER_USER_TYPE,
+						AgileConstants.PRODUCT_OWNER_USER_TYPE, AgileConstants.SCRUM_MASTER_USER_TYPE));
 		return userTypeList;
 	}
 
@@ -202,24 +215,24 @@ public class UserController {
 	public void setSelectedUser(UserServiceBean selectedUser) {
 		this.selectedUser = selectedUser;
 	}
-	
+
 	public void handleUserTypeSelect(Integer key) {
 		UserServiceBean user = userList.get(key);
-		if(getUserType().equals(AgileConstants.PRODUCT_OWNER_USER_TYPE)){
+		if (getUserType().equals(AgileConstants.PRODUCT_OWNER_USER_TYPE)) {
 			user = productOwnerConverter.convert(user);
-			userList.set(key,user);
-		}else if(getUserType().equals(AgileConstants.SCRUM_MASTER_USER_TYPE)){
+			userList.set(key, user);
+		} else if (getUserType().equals(AgileConstants.SCRUM_MASTER_USER_TYPE)) {
 			user = scrumMasterConverter.convert(user);
-			userList.set(key,user);
-		}else if(getUserType().equals(AgileConstants.DEVELOPER_USER_TYPE)){
+			userList.set(key, user);
+		} else if (getUserType().equals(AgileConstants.DEVELOPER_USER_TYPE)) {
 			user = developerConverter.convert(user);
-			userList.set(key,user);
-		}else if(getUserType().equals(AgileConstants.ADMIN_USER_TYPE)){
+			userList.set(key, user);
+		} else if (getUserType().equals(AgileConstants.ADMIN_USER_TYPE)) {
 			user = adminConverter.convert(user);
-			userList.set(key,user);
+			userList.set(key, user);
 		}
 	}
-	
+
 	public void userSelection(SelectEvent event) {
 		FacesMessage msg = new FacesMessage("User Selected", ((UserData) event.getObject()).getUsername());
 		FacesContext.getCurrentInstance().addMessage(null, msg);
